@@ -1,4 +1,5 @@
 from flask import Flask
+from app.exts import db, migrate
 
 def create_app(config_object='config.Config'):
     app = Flask(__name__)
@@ -9,7 +10,11 @@ def create_app(config_object='config.Config'):
 
 
 def register_extensions(app):
-    pass
+    db.init_app(app)
+    migrate.init_app(app, db)
+    from app import models
+    
+    return
 
 
 def register_blueprints(app):
